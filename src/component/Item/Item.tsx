@@ -21,7 +21,10 @@ const Item: React.FC<ICartItemProps> = ({ background, displayName, finalPrice, a
                         <span className="item-title">{displayName}</span>
                     </div>
                     <div className="card-action">
-                        <button onClick={() => addCart({ finalPrice, displayName, mainId, quantity: 1 })} className='btn light-blue darken-4'>Купить</button>
+                        <button
+                            onClick={() => addCart({ finalPrice, displayName, mainId, quantity: 1,background })}
+                            className='btn light-blue darken-4'>Купить</button>
+
                         <div className="card-price">{finalPrice}р</div>
                     </div>
                 </div>

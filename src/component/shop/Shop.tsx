@@ -30,12 +30,12 @@ const Shop: React.FC<IShopProp> = (props) => {
 
     return (
 
-        <main>
+
             <div className="container">
                 {goods.length === 0 ? <Preloader /> : <ItemList addCart={props.addCart} itemData={goods} />}
 
             </div>
-        </main>
+
 
     )
 }

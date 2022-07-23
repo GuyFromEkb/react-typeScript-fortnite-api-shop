@@ -3,12 +3,14 @@ import { IHeaderProp } from '../../interfase'
 
 import './Header.scss'
 
-const Header: React.FC<IHeaderProp> = ({ item }) => {
+const Header: React.FC<IHeaderProp> = ({ item, showCart }) => {
 
 
 
     const cartItem =
-        <div className="cart-wrap">
+        <div
+            onClick={showCart}
+            className="cart-wrap">
             <p>Корзина</p>
             <i className="material-icons ">shopping_cart</i>
             {item.length > 0 && <span className='light-blue darken-3 z-depth-1' >{item.length}</span>}
