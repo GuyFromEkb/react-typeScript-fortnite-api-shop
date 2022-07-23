@@ -40,3 +40,8 @@ export interface IHeaderProp {
     showCart(): void
     item: IBasketItem[]
 }
+export interface IToastProp {
+    name: string
+    clearToast(): void
+
+}

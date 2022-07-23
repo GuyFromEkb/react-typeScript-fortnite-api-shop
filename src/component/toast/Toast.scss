@@ -1,0 +1,17 @@
+.toast{
+    position: fixed;
+    top: 70px;
+    right: 11px;
+    animation: showToast 300ms ease-in-out;
+}
+
+@keyframes showToast {
+    from{
+        right: -100px;
+        opacity: 0;
+    }
+    to{
+        right: 11px;
+        opacity: 1;
+    }
+}

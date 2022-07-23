@@ -1,4 +1,5 @@
 .cart-modal {
+	animation: show 300ms ease-in-out;
 	background: #fff;
 	position: fixed;
 	top: 50%;
@@ -18,6 +19,19 @@
 			font-size: 30px;
 		}
 	}
+	.alert {
+		text-align: center;
+		font-size: 26px;
+	}
+	&__cost{
+		color: #01579b;
+		position: absolute;
+		right: 50px;
+		span{
+			font-weight: 600;
+			padding: 0 0 0 10px;
+		}
+	}
 }
 .cart-list {
 	display: flex;
@@ -27,4 +41,15 @@
 	flex-direction: column;
 	border: none;
 	border-bottom: 1px solid #01579b;
+}
+
+@keyframes show {
+	from {
+		left: 0;
+		opacity: 0;
+	}
+	to {
+		left: 50%;
+		opacity: 1;
+	}
 }
