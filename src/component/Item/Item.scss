@@ -1,0 +1,26 @@
+.card {
+	display: flex;
+	flex-direction: column;
+height: 100%;
+	.card-content {
+		flex-grow: 1;
+	}
+	.item-title {
+		display: block;
+		font-size: 14px;
+		text-align: center;
+	}
+	.card-content {
+		padding: 10px;
+	}
+	.card-action {
+		padding: 10px;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+	}
+}
+
+.mb {
+	margin-bottom: 300px;
+}
