@@ -1,19 +1,16 @@
-import { useReducer } from "react";
-import { myReducer, initialState } from "../../context/reduser";
+import { useContext } from "react";
+import { AppContext } from "../../context/context";
+import { useMyContext } from "../../hook";
 
 const TextComponent = () => {
-	const [state, dispatch] = useReducer(myReducer, initialState);
+	const { state, decrement, increment, reset } = useMyContext();
 
 	return (
 		<>
 			Count: {state.count}
-			<button onClick={() => dispatch({ type: "decrement", payload: "5" })}>
-				-
-			</button>
-			<button onClick={() => dispatch({ type: "increment", payload: 5 })}>
-				+
-			</button>
-			<button onClick={() => dispatch({ type: "reset" })}>reset</button>
+			<button onClick={increment}>+</button>
+			<button onClick={decrement}>-</button>
+			<button onClick={reset}>reset</button>
 		</>
 	);
 };

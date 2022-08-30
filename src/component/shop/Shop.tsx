@@ -3,12 +3,14 @@ import { useEffect, useState } from 'react'
 
 
 import ItemList from '../itemList/ItemList'
-import { ICardItem, IShopProp } from '../../interfase'
+import { IBasketItem, ICardItem, } from '../../interfase'
 import './Shop.scss'
 
+export interface IProps {
+    addCart(cartItem: IBasketItem): void
+}
 
-
-const Shop: React.FC<IShopProp> = (props) => {
+const Shop: React.FC<IProps> = (props) => {
     const [goods, setGoods] = useState<ICardItem[]>([])
 
 

@@ -1,28 +1,48 @@
-import { createContext } from "react";
+import React, { createContext, useContext, useReducer } from "react";
 
-interface IContextProp {
-	a: string;
-	setA(str: string): void;
-}
+export const initialState = { count: 0 };
 
-const sampleAppContext: IContextProp = {
-	a: "start value",
-	setA(str: string) {
-		this.a = str;
-	},
+type ACTIONTYPE =
+	| { type: "INCREMENT"; payload: number }
+	| { type: "DECREMENT"; payload: number }
+	| { type: "RESET" };
+
+export const myReducer = (
+	state: typeof initialState,
+	action: ACTIONTYPE
+): typeof initialState => {
+	switch (action.type) {
+		case "INCREMENT":
+			return { count: state.count + action.payload };
+		case "DECREMENT":
+			return { count: state.count - action.payload };
+		case "RESET": {
+			return { count: 0 };
+		}
+		default:
+			return state;
+	}
 };
 
-export const AppCtx = createContext({} as IContextProp);
+export interface IAppContext {
+	state: typeof initialState;
+	dispatch: React.Dispatch<ACTIONTYPE>;
+}
 
-interface IContext {
+export const AppContext = createContext({} as IAppContext);
+
+interface IProps {
 	children?: React.ReactNode;
 }
 
-export const ContextProvider: React.FC<IContext> = ({ children }) => {
+export const ContextProvider: React.FC<IProps> = ({ children }) => {
+	const [state, dispatch] = useReducer(myReducer, initialState);
+	const value = { state, dispatch };
+
+	const context = useContext(AppContext);
 	return (
 		<>
-			<AppCtx.Provider value={sampleAppContext}>{children}</AppCtx.Provider>
+			<AppContext.Provider value={value}>{children}</AppContext.Provider>
 		</>
 	);
 };
-
