@@ -1,67 +1,86 @@
-import React from 'react';
-import { useState } from 'react';
+import React from "react";
+import { useState } from "react";
 
-import { IBasketItem } from '../../interfase';
-import Header from '../header/Header';
-import Footer from '../footer/Footer';
-import Shop from '../shop/Shop';
-import Cart from '../cart/Cart';
-import Toast from '../toast/Toast';
+import { ContextProvider } from "../../context/context";
 
-import './App.scss'
+import { IBasketItem } from "../../interfase";
+import Header from "../header/Header";
+import Footer from "../footer/Footer";
+import Shop from "../shop/Shop";
+import Cart from "../cart/Cart";
+import Toast from "../toast/Toast";
+import TextComponent from "../A";
+
+import "./App.scss";
 
 const App: React.FC = () => {
-
-	const [cartItem, setCartItem] = useState<IBasketItem[]>([])
-	const [showCart, setShowCart] = useState<boolean>(false)
-	const [toastName, setToastName] = useState<string>('')
+	const [cartItem, setCartItem] = useState<IBasketItem[]>([]);
+	const [showCart, setShowCart] = useState<boolean>(false);
+	const [toastName, setToastName] = useState<string>("");
 
 	const onAddCartItem = (item: IBasketItem): void => {
+		const chekId = cartItem.findIndex(
+			(currentItem) => currentItem.mainId === item.mainId
+		);
 
-		const chekId = cartItem.findIndex(currentItem => currentItem.mainId === item.mainId)
-
-		if (chekId === -1)
-			setCartItem(prev => [...prev, item])
+		if (chekId === -1) setCartItem((prev) => [...prev, item]);
 		else {
 			const AddQuantity = cartItem.map((item, index) => {
-				return index === chekId ? { ...item, quantity: item.quantity + 1 } : item
-			})
+				return index === chekId
+					? { ...item, quantity: item.quantity + 1 }
+					: item;
+			});
 
-			setCartItem(AddQuantity)
+			setCartItem(AddQuantity);
 		}
-		setToastName(item.displayName)
-	}
+		setToastName(item.displayName);
+	};
 	const onChangeCartItemCounter = (n: number, id: string) => {
-
-		setCartItem(prev => prev.map(item => {
-			if (item.mainId === id) {
-				return item.quantity + n !== 0 ? { ...item, quantity: item.quantity + n } : item
-			}
-			return item
-		}))
-	}
+		setCartItem((prev) =>
+			prev.map((item) => {
+				if (item.mainId === id) {
+					return item.quantity + n !== 0
+						? { ...item, quantity: item.quantity + n }
+						: item;
+				}
+				return item;
+			})
+		);
+	};
 	const onDeleteCartItem = (id: string) => {
-		setCartItem(prev => prev.filter(item => item.mainId !== id))
-	}
+		setCartItem((prev) => prev.filter((item) => item.mainId !== id));
+	};
 	const onShowCart = () => {
-		setShowCart(prev => !prev)
-	}
+		setShowCart((prev) => !prev);
+	};
 	const clearToast = () => {
-		setToastName('')
-	}
+		setToastName("");
+	};
 
 	return (
 		<>
-			<Header showCart={onShowCart} item={cartItem} />
-			<main>
-				<button onClick={clearToast}>tst</button>
-				<Shop addCart={onAddCartItem} />
-				{showCart && <Cart deleteItem={onDeleteCartItem} changeCounter={onChangeCartItemCounter} items={cartItem} show={onShowCart} />}
-				{toastName && <Toast clearToast={clearToast} name={toastName} /> }
-			</main>
-			<Footer />
-		</>
-	)
-}
+			<ContextProvider>
+				<Header showCart={onShowCart} item={cartItem} />
+				<div className="container">
+					<TextComponent />
+				</div>
 
-export default App
+				<main>
+					<Shop addCart={onAddCartItem} />
+					{showCart && (
+						<Cart
+							deleteItem={onDeleteCartItem}
+							changeCounter={onChangeCartItemCounter}
+							items={cartItem}
+							show={onShowCart}
+						/>
+					)}
+					{toastName && <Toast clearToast={clearToast} name={toastName} />}
+				</main>
+				<Footer />
+			</ContextProvider>
+		</>
+	);
+};
+
+export default App;
