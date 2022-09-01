@@ -1,8 +1,6 @@
-import { FC, useContext } from 'react';
-import { AppContext } from '../../context/context';
+import { FC } from 'react';
 import { useMyContext } from '../../hook/useMyContext';
 import './Header.scss';
-
 interface IProps {
   showCart(): void;
 }
