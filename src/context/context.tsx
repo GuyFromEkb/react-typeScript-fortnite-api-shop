@@ -1,28 +1,25 @@
-import { createContext } from "react";
+import React, { createContext, useReducer } from 'react';
+import { ACTIONTYPE, IinitialState, myReducer } from './reduser';
 
-interface IContextProp {
-	a: string;
-	setA(str: string): void;
+export interface IAppContext {
+  state: IinitialState;
+  dispatch: React.Dispatch<ACTIONTYPE>;
 }
 
-const sampleAppContext: IContextProp = {
-	a: "start value",
-	setA(str: string) {
-		this.a = str;
-	},
-};
+export const AppContext = createContext({} as IAppContext);
 
-export const AppCtx = createContext({} as IContextProp);
-
-interface IContext {
-	children?: React.ReactNode;
+interface IProps {
+  children?: React.ReactNode;
 }
 
-export const ContextProvider: React.FC<IContext> = ({ children }) => {
-	return (
-		<>
-			<AppCtx.Provider value={sampleAppContext}>{children}</AppCtx.Provider>
-		</>
-	);
+const initialState: IinitialState = {
+  basketItem: [],
+  toast: '',
 };
 
+export const ContextProvider: React.FC<IProps> = ({ children }) => {
+  const [state, dispatch] = useReducer(myReducer, initialState);
+  const value = { state, dispatch };
+
+  return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
+};
