@@ -1,37 +1,34 @@
+import './Item.scss';
+import { ICardItem } from '../../interfase';
+import { useMyContext } from '../../hook/useMyContext';
 
+const Item: React.FC<ICardItem> = (props) => {
+  const { setBasketItem } = useMyContext();
 
-import './Item.scss'
-import { ICartItemProps } from '../../interfase'
+  return (
+    <>
+      <div className=' col s12 m6 l3  '>
+        <div className='card Medium z-depth-3'>
+          <div className='card-image'>
+            <img src={props.background} alt={props.displayName} />
+          </div>
+          <div className='card-content'>
+            <span className='item-title'>{props.displayName}</span>
+          </div>
+          <div className='card-action'>
+            <button
+              onClick={() => setBasketItem({ ...props, quantity: 1 })}
+              className='btn light-blue darken-4'
+            >
+              Купить
+            </button>
 
+            <div className='card-price'>{props.finalPrice}р</div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+};
 
-
-
-const Item: React.FC<ICartItemProps> = ({ background, displayName, finalPrice, addCart, mainId }) => {
-
-
-    return (
-        <>
-            <div className=" col s12 m6 l3  ">
-                <div className="card Medium z-depth-3">
-                    <div className="card-image">
-                        <img src={background} alt={displayName} />
-
-                    </div>
-                    <div className="card-content">
-                        <span className="item-title">{displayName}</span>
-                    </div>
-                    <div className="card-action">
-                        <button
-                            onClick={() => addCart({ finalPrice, displayName, mainId, quantity: 1,background })}
-                            className='btn light-blue darken-4'>Купить</button>
-
-                        <div className="card-price">{finalPrice}р</div>
-                    </div>
-                </div>
-            </div>
-        </>
-    )
-}
-
-export default Item
-
+export default Item;
